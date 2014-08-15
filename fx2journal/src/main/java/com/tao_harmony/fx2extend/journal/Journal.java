@@ -17,596 +17,530 @@
 package com.tao_harmony.fx2extend.journal;
 
 /**
- * @author kyanai 
- * 
- * FX2ÍÑ»ÅÌõ¥Ç¡¼¥¿. ¥Õ¥¡¥¤¥ë¥ì¥¤¥¢¥¦¥È¤Î¾ÜºÙ¤ÏProFIT¤ò»²¾È¤Î¤³¤È.
+ * @author kyanai e21ã¾ã„ã‚¹ã‚¿ãƒ¼ã€FX2ç”¨ä»•è¨³ãƒ‡ãƒ¼ã‚¿. ãƒ•ã‚¡ã‚¤ãƒ«ãƒ¬ã‚¤ã‚¢ã‚¦ãƒˆã®è©³ç´°ã¯ProFITã‚’å‚ç…§ã®ã“ã¨.
  */
 public class Journal {
 
-    /**
-     * ´ØÍ¿Àè¥³¡¼¥É.
-     */
-    private Short clientCode;
-    /**
-     * ¥Ç¡¼¥¿ºîÀ®¥·¥¹¥Æ¥à¶èÊ¬.¥³¥ó¥¹¥È¥é¥¯¥¿¤Ç¸ÇÄêÃÍ¤òÂåÆş¤¹¤ë.
-     */
-    private final Short systemClass = JournalUtil.FX2_SYSTEM_CLASS;
-    /**
-     * ¥ì¥³¡¼¥ÉÈÖ¹æ.
-     */
-    private Integer recordNumber;
-    /**
-     * ¼è°úÇ¯·îÆü.À¾Îñ¤Ç¥»¥Ã¥È¤¹¤ë.
-     */
-    private Integer tradingDay;
-    /**
-     * ÅÁÉ¼ÈÖ¹æ.¼«Æ°ÉÕÈÖ¤Î¤È¤­¤Ï¡¢²¿¤òÆş¤ì¤Æ¤â¥·¥¹¥Æ¥à¤¬¾¡¼ê¤ËÉÕÈÖ¤¹¤ë¤Î¤Ç¡¢¥¼¥í¤ÇÌäÂê¤Ê¤·.
-     */
-    private Integer slipNumber;
-    /**
-     * ¾ÚØá½ñÈÖ¹æ.4Ê¸»ú°ÊÆâ.
-     */
-    private String evidenceNumber;
-    /**
-     * ²İÀÇ¶èÊ¬.
-     */
-    private Byte taxClass;
-    /**
-     * »ö¶È¶èÊ¬.
-     */
-    private Byte segmentCode;
-    /**
-     * ¼ÚÊı²ÊÌÜ.
-     */
-    private Short debitCode;
-    /**
-     * ¼ÚÊıÊä½õ²ÊÌÜ.
-     */
-    private String debitSubCode;
-    /**
-     * ÂßÊı²ÊÌÜ.
-     */
-    private Short creditCode;
-    /**
-     * ÂßÊıÊä½õ²ÊÌÜ.
-     */
-    private String creditSubCode;
-    /**
-     * ¾®ÀÚ¼êÈÖ¹æ.
-     */
-    private String checkNumber;
-    /**
-     * Í½È÷ÎÎ°è1.
-     */
-    private final Short filler1 = JournalUtil.FX2_FILLER;
-    /**
-     * ¼è°ú¶â³Û.
-     */
-    private Double ammount;
-    /**
-     * ¾ÃÈñÀÇ³Û.¾ÃÈñÀÇ¤¬È¯À¸¤·¤Ê¤¤¼è°ú¡¢¤Ş¤¿¤ÏÀÇ¹ş¤ß·ĞÍı¤Î¾ì¹ç¤Ï¥¼¥í¸ÇÄê.
-     */
-    private Double taxAmmount;
-    /**
-     * ÀÇ³ÛÆşÎÏ¶èÊ¬.ÀÇÈ´¤­·ĞÍı¤«¤Ä¾ÃÈñÀÇ¤ò¥·¥¹¥Æ¥à¤Ç¼«Æ°·×»»¤·¤Æ¤¤¤ë¾ì¹ç¤Î¤ß1¤ò¥»¥Ã¥È.
-     */
-    private Byte taxInputClass;
-    /**
-     * ¾ÃÈñÀÇÎ¨.ÀÇÎ¨¤Î100ÇÜ¤ò¥»¥Ã¥È¤¹¤ë.¤¿¤À¤·¡¢ÀÇ³°¼è°ú¤Î¾ì¹ç¤Ï0¤ò¥»¥Ã¥È.
-     */
-    private Integer taxRate;
-    /**
-     * ¼è°úÀè¥³¡¼¥É.ÅĞÏ¿¤µ¤ì¤Æ¤¤¤Ê¤¤¼è°úÀè¤Î¾ì¹ç¤Ï¥¼¥í¤ò¥»¥Ã¥È.
-     * »ÅÌõ¤¬¼è°úÀè´ÉÍı¤µ¤ì¤Æ¤¤¤Ê¤¤¾ì¹ç¤Ç¡¢ÅĞÏ¿¤µ¤ì¤Æ¤¤¤Ê¤¤¼è°úÀè¥³¡¼¥É¤¬¥»¥Ã¥È¤µ¤ì¤¿¾ì¹ç¡¢¥¨¥é¡¼¤Ë¤Ê¤ë¤Î¤ÇÃí°Õ.
-     */
-    private Integer customerCode;
-    /**
-     * ¼è°úÀèÌ¾.¼è°úÀè¥³¡¼¥É¤¬¥»¥Ã¥È¤µ¤ì¤Æ¤¤¤ë¾ì¹ç¤Ç¡¢¤«¤Ä¤½¤ì¤¬¥¼¥í¤Ç¤Ê¤¤¾ì¹ç¡¢ÅĞÏ¿¤µ¤ì¤Æ¤¤¤ë¼è°úÀèÌ¾¤ËÃÖ¤­´¹¤¨¤é¤ì¤ë.
-     */
-    private String customer;
-    /**
-     * ¼Âºİ¤Î»ÅÆşÆü¥Ñ¥¿¡¼¥ó.
-     */
-    private Byte purchasePattern;
-    /**
-     * ¼Âºİ¤Î»ÅÆş³«»ÏÇ¯·îÆü.Ç¯·î¤Î¾ì¹ç¤Ï²¼2·å¤Ë¡Ö00¡×¤ò¥»¥Ã¥È.
-     */
-    private Integer purchaseDayBegins;
-    /**
-     * ¼Âºİ¤Î»ÅÆş½ªÎ»Ç¯·îÆü.
-     */
-    private Integer purchaseDayEnds;
-    /**
-     * Å¦Í×.
-     */
-    private String summary;
-    /**
-     * Í½È÷ÎÎ°è2.
-     */
-    private final Short filler2 = JournalUtil.FX2_FILLER;
-    /**
-     * »ñ¶âÂç¹àÌÜ.
-     */
-    private Byte fundBalanceMajor;
-    /**
-     * »ñ¶â¾®¹àÌÜ.
-     */
-    private Byte fundBalanceMinor;
-    /**
-     * ÉôÌç¥³¡¼¥É.
-     */
-    private Short departmentCode;
-    /**
-     * ÉôÌç¿ô.Â»±×¼è°ú¤Ï¤¿¤¤¤Æ¤¤1¡¢¤½¤ì°Ê³°¤Ï¥¼¥í¤ò¥»¥Ã¥È.
-     */
-    private Byte departmentCount;
-    /**
-     * ÉôÌç¶â³ÛÆşÎÏ¶èÊ¬.ÉôÌçÌÀºÙ¤ÎÀÇ¹ş¤ß¶â³Û¤òÍ­¸ú¤Ë¤¹¤ë¤«Èİ¤«.1¤ÇÍ­¸ú. ÉôÌçÌÀºÙ¥Õ¥¡¥¤¥ë¤ò»È¤ï¤Ê¤¤¸Â¤êÌµ°ÕÌ£.
-     */
-    private Byte departmentAmmountClass;
-    /**
-     * Í½È÷ÎÎ°è3.
-     */
-    private final Short filler3 = JournalUtil.FX2_FILLER;
-    /**
-     * ¼«Æ°»ÅÊ¬ÈÖ¹æ.ÂĞ±şÉÕ¤±ÉŞÍÜ¤Î¾ì¹ç¤Ï¥¼¥í¤ò¥»¥Ã¥È.
-     */
-    private Integer ruleNumber;
-    /**
-     * »ÙÊ§Í½ÄêÆü.»ÙÊ§´ÉÍı¤ò¹Ô¤ï¤Ê¤¤Åù¤Ë¤è¤ê»ÈÍÑ¤·¤Ê¤¤¾ì¹ç¤Ï¥¼¥í¤ò¥»¥Ã¥È.
-     */
-    private Integer paymentDay;
-    /**
-     * ²ó¼ıÍ½ÄêÆü.Æş¶â´ÉÍı¤ò¹Ô¤ï¤Ê¤¤Åù¤Ë¤è¤ê»ÈÍÑ¤·¤Ê¤¤¾ì¹ç¤Ï¥¼¥í¤ò¥»¥Ã¥È.
-     */
-    private Integer recoveryDay;
-
-    /**
-     * @return clientCode
-     */
-    public Short getClientCode() {
-        return clientCode;
-    }
-
-    /**
-     * @param clientCode clientCode¤ò¥»¥Ã¥È¤¹¤ë
-     */
-    public void setClientCode(Short clientCode) {
-        this.clientCode = clientCode;
-    }
-
-    /**
-     * @return recordNumber
-     */
-    public Integer getRecordNumber() {
-        return recordNumber;
-    }
-
-    /**
-     * @param recordNumber recordNumber¤ò¥»¥Ã¥È¤¹¤ë
-     */
-    public void setRecordNumber(Integer recordNumber) {
-        this.recordNumber = recordNumber;
-    }
-
-    /**
-     * @return tradingDay
-     */
-    public Integer getTradingDay() {
-        return tradingDay;
-    }
-
-    /**
-     * @param tradingDay tradingDay¤ò¥»¥Ã¥È¤¹¤ë
-     */
-    public void setTradingDay(Integer tradingDay) {
-        this.tradingDay = tradingDay;
-    }
-
-    /**
-     * @return slipNumber
-     */
-    public Integer getSlipNumber() {
-        return slipNumber;
-    }
-
-    /**
-     * @param slipNumber slipNumber¤ò¥»¥Ã¥È¤¹¤ë
-     */
-    public void setSlipNumber(Integer slipNumber) {
-        this.slipNumber = slipNumber;
-    }
-
-    /**
-     * @return evidenceNumber
-     */
-    public String getEvidenceNumber() {
-        return evidenceNumber;
-    }
-
-    /**
-     * @param evidenceNumber evidenceNumber¤ò¥»¥Ã¥È¤¹¤ë
-     */
-    public void setEvidenceNumber(String evidenceNumber) {
-        this.evidenceNumber = evidenceNumber;
-    }
-
-    /**
-     * @return taxClass
-     */
-    public Byte getTaxClass() {
-        return taxClass;
-    }
-
-    /**
-     * @param taxClass taxClass¤ò¥»¥Ã¥È¤¹¤ë
-     */
-    public void setTaxClass(Byte taxClass) {
-        this.taxClass = taxClass;
-    }
-
-    /**
-     * @return segmentCode
-     */
-    public Byte getSegmentCode() {
-        return segmentCode;
-    }
-
-    /**
-     * @param segmentCode segmentCode¤ò¥»¥Ã¥È¤¹¤ë
-     */
-    public void setSegmentCode(Byte segmentCode) {
-        this.segmentCode = segmentCode;
-    }
-
-    /**
-     * @return debitCode
-     */
-    public Short getDebitCode() {
-        return debitCode;
-    }
-
-    /**
-     * @param debitCode debitCode¤ò¥»¥Ã¥È¤¹¤ë
-     */
-    public void setDebitCode(Short debitCode) {
-        this.debitCode = debitCode;
-    }
-
-    /**
-     * @return debitSubCode
-     */
-    public String getDebitSubCode() {
-        return debitSubCode;
-    }
-
-    /**
-     * @param debitSubCode debitSubCode¤ò¥»¥Ã¥È¤¹¤ë
-     */
-    public void setDebitSubCode(String debitSubCode) {
-        this.debitSubCode = debitSubCode;
-    }
-
-    /**
-     * @return creditCode
-     */
-    public Short getCreditCode() {
-        return creditCode;
-    }
-
-    /**
-     * @param creditCode creditCode¤ò¥»¥Ã¥È¤¹¤ë
-     */
-    public void setCreditCode(Short creditCode) {
-        this.creditCode = creditCode;
-    }
-
-    /**
-     * @return creditSubCode
-     */
-    public String getCreditSubCode() {
-        return creditSubCode;
-    }
-
-    /**
-     * @param creditSubCode creditSubCode¤ò¥»¥Ã¥È¤¹¤ë
-     */
-    public void setCreditSubCode(String creditSubCode) {
-        this.creditSubCode = creditSubCode;
-    }
-
-    /**
-     * @return checkNumber
-     */
-    public String getCheckNumber() {
-        return checkNumber;
-    }
-
-    /**
-     * @param checkNumber checkNumber¤ò¥»¥Ã¥È¤¹¤ë
-     */
-    public void setCheckNumber(String checkNumber) {
-        this.checkNumber = checkNumber;
-    }
-
-    /**
-     * @return ammount
-     */
-    public Double getAmmount() {
-        return ammount;
-    }
-
-    /**
-     * @param ammount ammount¤ò¥»¥Ã¥È¤¹¤ë
-     */
-    public void setAmmount(Double ammount) {
-        this.ammount = ammount;
-    }
-
-    /**
-     * @return taxAmmount
-     */
-    public Double getTaxAmmount() {
-        return taxAmmount;
-    }
-
-    /**
-     * @param taxAmmount taxAmmount¤ò¥»¥Ã¥È¤¹¤ë
-     */
-    public void setTaxAmmount(Double taxAmmount) {
-        this.taxAmmount = taxAmmount;
-    }
-
-    /**
-     * @return taxInputClass
-     */
-    public Byte getTaxInputClass() {
-        return taxInputClass;
-    }
-
-    /**
-     * @param taxInputClass taxInputClass¤ò¥»¥Ã¥È¤¹¤ë
-     */
-    public void setTaxInputClass(Byte taxInputClass) {
-        this.taxInputClass = taxInputClass;
-    }
-
-    /**
-     * @return taxRate
-     */
-    public Integer getTaxRate() {
-        return taxRate;
-    }
-
-    /**
-     * @param taxRate taxRate¤ò¥»¥Ã¥È¤¹¤ë
-     */
-    public void setTaxRate(Integer taxRate) {
-        this.taxRate = taxRate;
-    }
-
-    /**
-     * @return customerCode
-     */
-    public Integer getCustomerCode() {
-        return customerCode;
-    }
-
-    /**
-     * @param customerCode customerCode¤ò¥»¥Ã¥È¤¹¤ë
-     */
-    public void setCustomerCode(Integer customerCode) {
-        this.customerCode = customerCode;
-    }
-
-    /**
-     * @return customer
-     */
-    public String getCustomer() {
-        return customer;
-    }
-
-    /**
-     * @param customer customer¤ò¥»¥Ã¥È¤¹¤ë
-     */
-    public void setCustomer(String customer) {
-        this.customer = customer;
-    }
-
-    /**
-     * @return purchasePattern
-     */
-    public Byte getPurchasePattern() {
-        return purchasePattern;
-    }
-
-    /**
-     * @param purchasePattern purchasePattern¤ò¥»¥Ã¥È¤¹¤ë
-     */
-    public void setPurchasePattern(Byte purchasePattern) {
-        this.purchasePattern = purchasePattern;
-    }
-
-    /**
-     * @return purchaseDayBegins
-     */
-    public Integer getPurchaseDayBegins() {
-        return purchaseDayBegins;
-    }
-
-    /**
-     * @param purchaseDayBegins purchaseDayBegins¤ò¥»¥Ã¥È¤¹¤ë
-     */
-    public void setPurchaseDayBegins(Integer purchaseDayBegins) {
-        this.purchaseDayBegins = purchaseDayBegins;
-    }
-
-    /**
-     * @return purchaseDayEnds
-     */
-    public Integer getPurchaseDayEnds() {
-        return purchaseDayEnds;
-    }
-
-    /**
-     * @param purchaseDayEnds purchaseDayEnds¤ò¥»¥Ã¥È¤¹¤ë
-     */
-    public void setPurchaseDayEnds(Integer purchaseDayEnds) {
-        this.purchaseDayEnds = purchaseDayEnds;
-    }
-
-    /**
-     * @return summary
-     */
-    public String getSummary() {
-        return summary;
-    }
-
-    /**
-     * @param summary summary¤ò¥»¥Ã¥È¤¹¤ë
-     */
-    public void setSummary(String summary) {
-        this.summary = summary;
-    }
-
-    /**
-     * @return fundBalanceMajor
-     */
-    public Byte getFundBalanceMajor() {
-        return fundBalanceMajor;
-    }
-
-    /**
-     * @param fundBalanceMajor fundBalanceMajor¤ò¥»¥Ã¥È¤¹¤ë
-     */
-    public void setFundBalanceMajor(Byte fundBalanceMajor) {
-        this.fundBalanceMajor = fundBalanceMajor;
-    }
-
-    /**
-     * @return fundBalanceMinor
-     */
-    public Byte getFundBalanceMinor() {
-        return fundBalanceMinor;
-    }
-
-    /**
-     * @param fundBalanceMinor fundBalanceMinor¤ò¥»¥Ã¥È¤¹¤ë
-     */
-    public void setFundBalanceMinor(Byte fundBalanceMinor) {
-        this.fundBalanceMinor = fundBalanceMinor;
-    }
-
-    /**
-     * @return departmentCode
-     */
-    public Short getDepartmentCode() {
-        return departmentCode;
-    }
-
-    /**
-     * @param departmentCode departmentCode¤ò¥»¥Ã¥È¤¹¤ë
-     */
-    public void setDepartmentCode(Short departmentCode) {
-        this.departmentCode = departmentCode;
-    }
-
-    /**
-     * @return departmentCount
-     */
-    public Byte getDepartmentCount() {
-        return departmentCount;
-    }
-
-    /**
-     * @param departmentCount departmentCount¤ò¥»¥Ã¥È¤¹¤ë
-     */
-    public void setDepartmentCount(Byte departmentCount) {
-        this.departmentCount = departmentCount;
-    }
-
-    /**
-     * @return departmentAmmountClass
-     */
-    public Byte getDepartmentAmmountClass() {
-        return departmentAmmountClass;
-    }
-
-    /**
-     * @param departmentAmmountClass departmentAmmountClass¤ò¥»¥Ã¥È¤¹¤ë
-     */
-    public void setDepartmentAmmountClass(Byte departmentAmmountClass) {
-        this.departmentAmmountClass = departmentAmmountClass;
-    }
-
-    /**
-     * @return ruleNumber
-     */
-    public Integer getRuleNumber() {
-        return ruleNumber;
-    }
-
-    /**
-     * @param ruleNumber ruleNumber¤ò¥»¥Ã¥È¤¹¤ë
-     */
-    public void setRuleNumber(Integer ruleNumber) {
-        this.ruleNumber = ruleNumber;
-    }
-
-    /**
-     * @return paymentDay
-     */
-    public Integer getPaymentDay() {
-        return paymentDay;
-    }
-
-    /**
-     * @param paymentDay paymentDay¤ò¥»¥Ã¥È¤¹¤ë
-     */
-    public void setPaymentDay(Integer paymentDay) {
-        this.paymentDay = paymentDay;
-    }
-
-    /**
-     * @return recoveryDay
-     */
-    public Integer getRecoveryDay() {
-        return recoveryDay;
-    }
-
-    /**
-     * @param recoveryDay recoveryDay¤ò¥»¥Ã¥È¤¹¤ë
-     */
-    public void setRecoveryDay(Integer recoveryDay) {
-        this.recoveryDay = recoveryDay;
-    }
-
-    /**
-     * @return systemClass
-     */
-    public Short getSystemClass() {
-        return systemClass;
-    }
-
-    /**
-     * @return filler1
-     */
-    public Short getFiller1() {
-        return filler1;
-    }
-
-    /**
-     * @return filler2
-     */
-    public Short getFiller2() {
-        return filler2;
-    }
-
-    /**
-     * @return filler3
-     */
-    public Short getFiller3() {
-        return filler3;
-    }
+	/**
+	 * é–¢ä¸å…ˆã‚³ãƒ¼ãƒ‰.
+	 */
+	private Short clientCode;
+	/**
+	 * ãƒ‡ãƒ¼ã‚¿ä½œæˆã‚·ã‚¹ãƒ†ãƒ åŒºåˆ†.ã‚³ãƒ³ã‚¹ãƒˆãƒ©ã‚¯ã‚¿ã§å›ºå®šå€¤ã‚’ä»£å…¥ã™ã‚‹.
+	 */
+	private final Short systemClass = JournalUtil.FX2_SYSTEM_CLASS;
+	/**
+	 * ãƒ¬ã‚³ãƒ¼ãƒ‰ç•ªå·.
+	 */
+	private Integer recordNumber;
+	/**
+	 * å–å¼•å¹´æœˆæ—¥.è¥¿æš¦ã§ã‚»ãƒƒãƒˆã™ã‚‹.
+	 */
+	private Integer tradingDay;
+	/**
+	 * ä¼ç¥¨ç•ªå·.è‡ªå‹•ä»˜ç•ªã®ã¨ãã¯ã€ä½•ã‚’å…¥ã‚Œã¦ã‚‚ã‚·ã‚¹ãƒ†ãƒ ãŒå‹æ‰‹ã«ä»˜ç•ªã™ã‚‹ã®ã§ã€ã‚¼ãƒ­ã§å•é¡Œãªã—.
+	 */
+	private Integer slipNumber;
+	/**
+	 * è¨¼æ†‘æ›¸ç•ªå·.4æ–‡å­—ä»¥å†….
+	 */
+	private String evidenceNumber;
+	/**
+	 * èª²ç¨åŒºåˆ†.
+	 */
+	private Byte taxClass;
+	/**
+	 * äº‹æ¥­åŒºåˆ†.
+	 */
+	private Byte segmentCode;
+	/**
+	 * å€Ÿæ–¹ç§‘ç›®.
+	 */
+	private Short debitCode;
+	/**
+	 * å€Ÿæ–¹è£œåŠ©ç§‘ç›®.
+	 */
+	private String debitSubCode;
+	/**
+	 * è²¸æ–¹ç§‘ç›®.
+	 */
+	private Short creditCode;
+	/**
+	 * è²¸æ–¹è£œåŠ©ç§‘ç›®.
+	 */
+	private String creditSubCode;
+	/**
+	 * å°åˆ‡æ‰‹ç•ªå·.
+	 */
+	private String checkNumber;
+	/**
+	 * äºˆå‚™é ˜åŸŸ1.
+	 */
+	private final Short filler1 = JournalUtil.FX2_FILLER;
+	/**
+	 * å–å¼•é‡‘é¡.
+	 */
+	private Double ammount;
+	/**
+	 * æ¶ˆè²»ç¨é¡.æ¶ˆè²»ç¨ãŒç™ºç”Ÿã—ãªã„å–å¼•ã€ã¾ãŸã¯ç¨è¾¼ã¿çµŒç†ã®å ´åˆã¯ã‚¼ãƒ­å›ºå®š.
+	 */
+	private Double taxAmmount;
+	/**
+	 * ç¨é¡å…¥åŠ›åŒºåˆ†.ç¨æŠœãçµŒç†ã‹ã¤æ¶ˆè²»ç¨ã‚’ã‚·ã‚¹ãƒ†ãƒ ã§è‡ªå‹•è¨ˆç®—ã—ã¦ã„ã‚‹å ´åˆã®ã¿1ã‚’ã‚»ãƒƒãƒˆ.
+	 */
+	private Byte taxInputClass;
+	/**
+	 * æ¶ˆè²»ç¨ç‡.ç¨ç‡ã®100å€ã‚’ã‚»ãƒƒãƒˆã™ã‚‹.ãŸã ã—ã€ç¨å¤–å–å¼•ã®å ´åˆã¯0ã‚’ã‚»ãƒƒãƒˆ.
+	 */
+	private Integer taxRate;
+	/**
+	 * å–å¼•å…ˆã‚³ãƒ¼ãƒ‰.ç™»éŒ²ã•ã‚Œã¦ã„ãªã„å–å¼•å…ˆã®å ´åˆã¯ã‚¼ãƒ­ã‚’ã‚»ãƒƒãƒˆ.
+	 * ä»•è¨³ãŒå–å¼•å…ˆç®¡ç†ã•ã‚Œã¦ã„ãªã„å ´åˆã§ã€ç™»éŒ²ã•ã‚Œã¦ã„ãªã„å–å¼•å…ˆã‚³ãƒ¼ãƒ‰ãŒã‚»ãƒƒãƒˆã•ã‚ŒãŸå ´åˆã€ã‚¨ãƒ©ãƒ¼ã«ãªã‚‹ã®ã§æ³¨æ„.
+	 */
+	private Integer customerCode;
+	/**
+	 * å–å¼•å…ˆå.å–å¼•å…ˆã‚³ãƒ¼ãƒ‰ãŒã‚»ãƒƒãƒˆã•ã‚Œã¦ã„ã‚‹å ´åˆã§ã€ã‹ã¤ãã‚ŒãŒã‚¼ãƒ­ã§ãªã„å ´åˆã€ç™»éŒ²ã•ã‚Œã¦ã„ã‚‹å–å¼•å…ˆåã«ç½®ãæ›ãˆã‚‰ã‚Œã‚‹.
+	 */
+	private String customer;
+	/**
+	 * å®Ÿéš›ã®ä»•å…¥æ—¥ãƒ‘ã‚¿ãƒ¼ãƒ³.
+	 */
+	private Byte purchasePattern;
+	/**
+	 * å®Ÿéš›ã®ä»•å…¥é–‹å§‹å¹´æœˆæ—¥.å¹´æœˆã®å ´åˆã¯ä¸‹2æ¡ã«ã€Œ00ã€ã‚’ã‚»ãƒƒãƒˆ.
+	 */
+	private Integer purchaseDayBegins;
+	/**
+	 * å®Ÿéš›ã®ä»•å…¥çµ‚äº†å¹´æœˆæ—¥.
+	 */
+	private Integer purchaseDayEnds;
+	/**
+	 * æ‘˜è¦.
+	 */
+	private String summary;
+	/**
+	 * äºˆå‚™é ˜åŸŸ2.
+	 */
+	private final Short filler2 = JournalUtil.FX2_FILLER;
+	/**
+	 * è³‡é‡‘å¤§é …ç›®.
+	 */
+	private Byte fundBalanceMajor;
+	/**
+	 * è³‡é‡‘å°é …ç›®.
+	 */
+	private Byte fundBalanceMinor;
+	/**
+	 * éƒ¨é–€ã‚³ãƒ¼ãƒ‰.
+	 */
+	private Short departmentCode;
+	/**
+	 * éƒ¨é–€æ•°.æç›Šå–å¼•ã¯ãŸã„ã¦ã„1ã€ãã‚Œä»¥å¤–ã¯ã‚¼ãƒ­ã‚’ã‚»ãƒƒãƒˆ.
+	 */
+	private Byte departmentCount;
+	/**
+	 * éƒ¨é–€é‡‘é¡å…¥åŠ›åŒºåˆ†.éƒ¨é–€æ˜ç´°ã®ç¨è¾¼ã¿é‡‘é¡ã‚’æœ‰åŠ¹ã«ã™ã‚‹ã‹å¦ã‹.1ã§æœ‰åŠ¹. éƒ¨é–€æ˜ç´°ãƒ•ã‚¡ã‚¤ãƒ«ã‚’ä½¿ã‚ãªã„é™ã‚Šç„¡æ„å‘³.
+	 */
+	private Byte departmentAmmountClass;
+	/**
+	 * äºˆå‚™é ˜åŸŸ3.
+	 */
+	private final Short filler3 = JournalUtil.FX2_FILLER;
+	/**
+	 * è‡ªå‹•ä»•åˆ†ç•ªå·.å¯¾å¿œä»˜ã‘æ‰¶é¤Šã®å ´åˆã¯ã‚¼ãƒ­ã‚’ã‚»ãƒƒãƒˆ.
+	 */
+	private Integer ruleNumber;
+	/**
+	 * æ”¯æ‰•äºˆå®šæ—¥.æ”¯æ‰•ç®¡ç†ã‚’è¡Œã‚ãªã„ç­‰ã«ã‚ˆã‚Šä½¿ç”¨ã—ãªã„å ´åˆã¯ã‚¼ãƒ­ã‚’ã‚»ãƒƒãƒˆ.
+	 */
+	private Integer paymentDay;
+	/**
+	 * å›åäºˆå®šæ—¥.å…¥é‡‘ç®¡ç†ã‚’è¡Œã‚ãªã„ç­‰ã«ã‚ˆã‚Šä½¿ç”¨ã—ãªã„å ´åˆã¯ã‚¼ãƒ­ã‚’ã‚»ãƒƒãƒˆ.
+	 */
+	private Integer recoveryDay;
+	/**
+	 * @return clientCode
+	 */
+	public Short getClientCode() {
+		return clientCode;
+	}
+	/**
+	 * @param clientCode clientCodeã‚’ã‚»ãƒƒãƒˆã™ã‚‹
+	 */
+	public void setClientCode(Short clientCode) {
+		this.clientCode = clientCode;
+	}
+	/**
+	 * @return recordNumber
+	 */
+	public Integer getRecordNumber() {
+		return recordNumber;
+	}
+	/**
+	 * @param recordNumber recordNumberã‚’ã‚»ãƒƒãƒˆã™ã‚‹
+	 */
+	public void setRecordNumber(Integer recordNumber) {
+		this.recordNumber = recordNumber;
+	}
+	/**
+	 * @return tradingDay
+	 */
+	public Integer getTradingDay() {
+		return tradingDay;
+	}
+	/**
+	 * @param tradingDay tradingDayã‚’ã‚»ãƒƒãƒˆã™ã‚‹
+	 */
+	public void setTradingDay(Integer tradingDay) {
+		this.tradingDay = tradingDay;
+	}
+	/**
+	 * @return slipNumber
+	 */
+	public Integer getSlipNumber() {
+		return slipNumber;
+	}
+	/**
+	 * @param slipNumber slipNumberã‚’ã‚»ãƒƒãƒˆã™ã‚‹
+	 */
+	public void setSlipNumber(Integer slipNumber) {
+		this.slipNumber = slipNumber;
+	}
+	/**
+	 * @return evidenceNumber
+	 */
+	public String getEvidenceNumber() {
+		return evidenceNumber;
+	}
+	/**
+	 * @param evidenceNumber evidenceNumberã‚’ã‚»ãƒƒãƒˆã™ã‚‹
+	 */
+	public void setEvidenceNumber(String evidenceNumber) {
+		this.evidenceNumber = evidenceNumber;
+	}
+	/**
+	 * @return taxClass
+	 */
+	public Byte getTaxClass() {
+		return taxClass;
+	}
+	/**
+	 * @param taxClass taxClassã‚’ã‚»ãƒƒãƒˆã™ã‚‹
+	 */
+	public void setTaxClass(Byte taxClass) {
+		this.taxClass = taxClass;
+	}
+	/**
+	 * @return segmentCode
+	 */
+	public Byte getSegmentCode() {
+		return segmentCode;
+	}
+	/**
+	 * @param segmentCode segmentCodeã‚’ã‚»ãƒƒãƒˆã™ã‚‹
+	 */
+	public void setSegmentCode(Byte segmentCode) {
+		this.segmentCode = segmentCode;
+	}
+	/**
+	 * @return debitCode
+	 */
+	public Short getDebitCode() {
+		return debitCode;
+	}
+	/**
+	 * @param debitCode debitCodeã‚’ã‚»ãƒƒãƒˆã™ã‚‹
+	 */
+	public void setDebitCode(Short debitCode) {
+		this.debitCode = debitCode;
+	}
+	/**
+	 * @return debitSubCode
+	 */
+	public String getDebitSubCode() {
+		return debitSubCode;
+	}
+	/**
+	 * @param debitSubCode debitSubCodeã‚’ã‚»ãƒƒãƒˆã™ã‚‹
+	 */
+	public void setDebitSubCode(String debitSubCode) {
+		this.debitSubCode = debitSubCode;
+	}
+	/**
+	 * @return creditCode
+	 */
+	public Short getCreditCode() {
+		return creditCode;
+	}
+	/**
+	 * @param creditCode creditCodeã‚’ã‚»ãƒƒãƒˆã™ã‚‹
+	 */
+	public void setCreditCode(Short creditCode) {
+		this.creditCode = creditCode;
+	}
+	/**
+	 * @return creditSubCode
+	 */
+	public String getCreditSubCode() {
+		return creditSubCode;
+	}
+	/**
+	 * @param creditSubCode creditSubCodeã‚’ã‚»ãƒƒãƒˆã™ã‚‹
+	 */
+	public void setCreditSubCode(String creditSubCode) {
+		this.creditSubCode = creditSubCode;
+	}
+	/**
+	 * @return checkNumber
+	 */
+	public String getCheckNumber() {
+		return checkNumber;
+	}
+	/**
+	 * @param checkNumber checkNumberã‚’ã‚»ãƒƒãƒˆã™ã‚‹
+	 */
+	public void setCheckNumber(String checkNumber) {
+		this.checkNumber = checkNumber;
+	}
+	/**
+	 * @return ammount
+	 */
+	public Double getAmmount() {
+		return ammount;
+	}
+	/**
+	 * @param ammount ammountã‚’ã‚»ãƒƒãƒˆã™ã‚‹
+	 */
+	public void setAmmount(Double ammount) {
+		this.ammount = ammount;
+	}
+	/**
+	 * @return taxAmmount
+	 */
+	public Double getTaxAmmount() {
+		return taxAmmount;
+	}
+	/**
+	 * @param taxAmmount taxAmmountã‚’ã‚»ãƒƒãƒˆã™ã‚‹
+	 */
+	public void setTaxAmmount(Double taxAmmount) {
+		this.taxAmmount = taxAmmount;
+	}
+	/**
+	 * @return taxInputClass
+	 */
+	public Byte getTaxInputClass() {
+		return taxInputClass;
+	}
+	/**
+	 * @param taxInputClass taxInputClassã‚’ã‚»ãƒƒãƒˆã™ã‚‹
+	 */
+	public void setTaxInputClass(Byte taxInputClass) {
+		this.taxInputClass = taxInputClass;
+	}
+	/**
+	 * @return taxRate
+	 */
+	public Integer getTaxRate() {
+		return taxRate;
+	}
+	/**
+	 * @param taxRate taxRateã‚’ã‚»ãƒƒãƒˆã™ã‚‹
+	 */
+	public void setTaxRate(Integer taxRate) {
+		this.taxRate = taxRate;
+	}
+	/**
+	 * @return customerCode
+	 */
+	public Integer getCustomerCode() {
+		return customerCode;
+	}
+	/**
+	 * @param customerCode customerCodeã‚’ã‚»ãƒƒãƒˆã™ã‚‹
+	 */
+	public void setCustomerCode(Integer customerCode) {
+		this.customerCode = customerCode;
+	}
+	/**
+	 * @return customer
+	 */
+	public String getCustomer() {
+		return customer;
+	}
+	/**
+	 * @param customer customerã‚’ã‚»ãƒƒãƒˆã™ã‚‹
+	 */
+	public void setCustomer(String customer) {
+		this.customer = customer;
+	}
+	/**
+	 * @return purchasePattern
+	 */
+	public Byte getPurchasePattern() {
+		return purchasePattern;
+	}
+	/**
+	 * @param purchasePattern purchasePatternã‚’ã‚»ãƒƒãƒˆã™ã‚‹
+	 */
+	public void setPurchasePattern(Byte purchasePattern) {
+		this.purchasePattern = purchasePattern;
+	}
+	/**
+	 * @return purchaseDayBegins
+	 */
+	public Integer getPurchaseDayBegins() {
+		return purchaseDayBegins;
+	}
+	/**
+	 * @param purchaseDayBegins purchaseDayBeginsã‚’ã‚»ãƒƒãƒˆã™ã‚‹
+	 */
+	public void setPurchaseDayBegins(Integer purchaseDayBegins) {
+		this.purchaseDayBegins = purchaseDayBegins;
+	}
+	/**
+	 * @return purchaseDayEnds
+	 */
+	public Integer getPurchaseDayEnds() {
+		return purchaseDayEnds;
+	}
+	/**
+	 * @param purchaseDayEnds purchaseDayEndsã‚’ã‚»ãƒƒãƒˆã™ã‚‹
+	 */
+	public void setPurchaseDayEnds(Integer purchaseDayEnds) {
+		this.purchaseDayEnds = purchaseDayEnds;
+	}
+	/**
+	 * @return summary
+	 */
+	public String getSummary() {
+		return summary;
+	}
+	/**
+	 * @param summary summaryã‚’ã‚»ãƒƒãƒˆã™ã‚‹
+	 */
+	public void setSummary(String summary) {
+		this.summary = summary;
+	}
+	/**
+	 * @return fundBalanceMajor
+	 */
+	public Byte getFundBalanceMajor() {
+		return fundBalanceMajor;
+	}
+	/**
+	 * @param fundBalanceMajor fundBalanceMajorã‚’ã‚»ãƒƒãƒˆã™ã‚‹
+	 */
+	public void setFundBalanceMajor(Byte fundBalanceMajor) {
+		this.fundBalanceMajor = fundBalanceMajor;
+	}
+	/**
+	 * @return fundBalanceMinor
+	 */
+	public Byte getFundBalanceMinor() {
+		return fundBalanceMinor;
+	}
+	/**
+	 * @param fundBalanceMinor fundBalanceMinorã‚’ã‚»ãƒƒãƒˆã™ã‚‹
+	 */
+	public void setFundBalanceMinor(Byte fundBalanceMinor) {
+		this.fundBalanceMinor = fundBalanceMinor;
+	}
+	/**
+	 * @return departmentCode
+	 */
+	public Short getDepartmentCode() {
+		return departmentCode;
+	}
+	/**
+	 * @param departmentCode departmentCodeã‚’ã‚»ãƒƒãƒˆã™ã‚‹
+	 */
+	public void setDepartmentCode(Short departmentCode) {
+		this.departmentCode = departmentCode;
+	}
+	/**
+	 * @return departmentCount
+	 */
+	public Byte getDepartmentCount() {
+		return departmentCount;
+	}
+	/**
+	 * @param departmentCount departmentCountã‚’ã‚»ãƒƒãƒˆã™ã‚‹
+	 */
+	public void setDepartmentCount(Byte departmentCount) {
+		this.departmentCount = departmentCount;
+	}
+	/**
+	 * @return departmentAmmountClass
+	 */
+	public Byte getDepartmentAmmountClass() {
+		return departmentAmmountClass;
+	}
+	/**
+	 * @param departmentAmmountClass departmentAmmountClassã‚’ã‚»ãƒƒãƒˆã™ã‚‹
+	 */
+	public void setDepartmentAmmountClass(Byte departmentAmmountClass) {
+		this.departmentAmmountClass = departmentAmmountClass;
+	}
+	/**
+	 * @return ruleNumber
+	 */
+	public Integer getRuleNumber() {
+		return ruleNumber;
+	}
+	/**
+	 * @param ruleNumber ruleNumberã‚’ã‚»ãƒƒãƒˆã™ã‚‹
+	 */
+	public void setRuleNumber(Integer ruleNumber) {
+		this.ruleNumber = ruleNumber;
+	}
+	/**
+	 * @return paymentDay
+	 */
+	public Integer getPaymentDay() {
+		return paymentDay;
+	}
+	/**
+	 * @param paymentDay paymentDayã‚’ã‚»ãƒƒãƒˆã™ã‚‹
+	 */
+	public void setPaymentDay(Integer paymentDay) {
+		this.paymentDay = paymentDay;
+	}
+	/**
+	 * @return recoveryDay
+	 */
+	public Integer getRecoveryDay() {
+		return recoveryDay;
+	}
+	/**
+	 * @param recoveryDay recoveryDayã‚’ã‚»ãƒƒãƒˆã™ã‚‹
+	 */
+	public void setRecoveryDay(Integer recoveryDay) {
+		this.recoveryDay = recoveryDay;
+	}
+	/**
+	 * @return systemClass
+	 */
+	public Short getSystemClass() {
+		return systemClass;
+	}
+	/**
+	 * @return filler1
+	 */
+	public Short getFiller1() {
+		return filler1;
+	}
+	/**
+	 * @return filler2
+	 */
+	public Short getFiller2() {
+		return filler2;
+	}
+	/**
+	 * @return filler3
+	 */
+	public Short getFiller3() {
+		return filler3;
+	}
 
 }
