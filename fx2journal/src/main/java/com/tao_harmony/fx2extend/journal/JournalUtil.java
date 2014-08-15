@@ -32,79 +32,68 @@ import com.orangesignal.csv.manager.CsvManagerFactory;
  */
 public class JournalUtil {
 
-	/**
-	 * äºˆå‚™é ˜åŸŸã«æŒ¿å…¥ã™ã‚‹å®šæ•°.ã‚¼ãƒ­.
-	 */
-	public static final short FX2_FILLER = 0;
-	/**
-	 * ã‚·ã‚¹ãƒ†ãƒ åŒºåˆ†é ˜åŸŸã«æŒ¿å…¥ã™ã‚‹å®šæ•°.999.
-	 */
-	public static final short FX2_SYSTEM_CLASS = (short) 999;
+    /**
+     * Í½È÷ÎÎ°è¤ËÁŞÆş¤¹¤ëÄê¿ô.¥¼¥í.
+     */
+    public static final short FX2_FILLER = 0;
+    /**
+     * ¥·¥¹¥Æ¥à¶èÊ¬ÎÎ°è¤ËÁŞÆş¤¹¤ëÄê¿ô.999.
+     */
+    public static final short FX2_SYSTEM_CLASS = (short) 999;
 
-	/**
-	 * éƒ¨é–€æ˜ç´°æŠœãã§ä»•è¨³ãƒ•ã‚¡ã‚¤ãƒ«ã‚’ä¿å­˜ã™ã‚‹.
-	 *
-	 * @param journals
-	 *            ä»•è¨³ãƒªã‚¹ãƒˆ
-	 * @param fileName
-	 *            ä¿å­˜å…ˆ
-	 * @throws NoListException
-	 *             ä»•è¨³ãƒªã‚¹ãƒˆãŒNullåˆã¯ç©ºã®ã¨ã
-	 * @throws FileNameEmptyException
-	 *             ãƒ•ã‚¡ã‚¤ãƒ«åãŒNullåˆã¯ç©ºç™½ã®ã¨ã
-	 * @throws IOException
-	 *             ãƒ•ã‚¡ã‚¤ãƒ«ã‚·ã‚¹ãƒ†ãƒ ä¸Šã§ã‚¨ãƒ©ãƒ¼ãŒç™ºç”Ÿã—ãŸã¨ã
-	 */
-	public static void saveJournals(List<Journal> journals, String fileName)
-			throws NoListException, FileNameEmptyException, IOException {
-		// Nullãªã‚‰ä¾‹å¤–
-		if (journals == null) {
-			throw new NoListException();
-		}
-		// ãƒªã‚¹ãƒˆãŒç©ºã§ã‚‚ä¾‹å¤–
-		if (journals.isEmpty()) {
-			throw new NoListException();
-		}
-		// ãƒ•ã‚¡ã‚¤ãƒ«åãŒç©ºç™½ãªã‚‰ä¾‹å¤–
-		if (StringUtils.isBlank(fileName)
-				|| StringUtils.isBlank(FilenameUtils.getName(fileName))) {
-			throw new FileNameEmptyException();
-		}
-		// æ‹¡å¼µå­ã‚’ã€Œ.slpã€ã«å¤‰æ›
-		String name = FilenameUtils.getFullPath(fileName)
-				+ FilenameUtils.getBaseName(fileName) + ".slp";
-		// ä¿å­˜
-		CsvManager csvManager = CsvManagerFactory.newCsvManager();
-		csvManager.save(journals, Journal.class).to(new File(name));
-	}
+    /**
+     * ÉôÌçÌÀºÙÈ´¤­¤Ç»ÅÌõ¥Õ¥¡¥¤¥ë¤òÊİÂ¸¤¹¤ë.
+     *
+     * @param journals »ÅÌõ¥ê¥¹¥È
+     * @param fileName ÊİÂ¸Àè
+     * @throws NoListException »ÅÌõ¥ê¥¹¥È¤¬NullËô¤Ï¶õ¤Î¤È¤­
+     * @throws FileNameEmptyException ¥Õ¥¡¥¤¥ëÌ¾¤¬NullËô¤Ï¶õÇò¤Î¤È¤­
+     * @throws IOException ¥Õ¥¡¥¤¥ë¥·¥¹¥Æ¥à¾å¤Ç¥¨¥é¡¼¤¬È¯À¸¤·¤¿¤È¤­
+     */
+    public static void saveJournals(List<Journal> journals, String fileName)
+            throws NoListException, FileNameEmptyException, IOException {
+        // Null¤Ê¤éÎã³°
+        if (journals == null) {
+            throw new NoListException();
+        }
+        // ¥ê¥¹¥È¤¬¶õ¤Ç¤âÎã³°
+        if (journals.isEmpty()) {
+            throw new NoListException();
+        }
+        // ¥Õ¥¡¥¤¥ëÌ¾¤¬¶õÇò¤Ê¤éÎã³°
+        if (StringUtils.isBlank(fileName)
+                || StringUtils.isBlank(FilenameUtils.getName(fileName))) {
+            throw new FileNameEmptyException();
+        }
+        // ³ÈÄ¥»Ò¤ò¡Ö.slp¡×¤ËÊÑ´¹
+        String name = FilenameUtils.getFullPath(fileName)
+                + FilenameUtils.getBaseName(fileName) + ".slp";
+        // ÊİÂ¸
+        CsvManager csvManager = CsvManagerFactory.newCsvManager();
+        csvManager.save(journals, Journal.class).to(new File(name));
+    }
 
-	/**
-	 * éƒ¨é–€æ˜ç´°ã‚’å«ã‚ã¦ä»•è¨³ãƒ•ã‚¡ã‚¤ãƒ«ã‚’ä¿å­˜ã™ã‚‹. éƒ¨é–€æ˜ç´°ã®ä»•æ§˜ãŒè¤‡é›‘ã§ã‚ã‚‹ãŸã‚ã€éæ¨å¥¨ã‚¢ãƒãƒ†ãƒ¼ã‚·ãƒ§ãƒ³ã¯ã¤ã‘ã¦ã„ãªã„ãŒéæ¨å¥¨.
-	 *
-	 * @param journals
-	 *            ä»•è¨³ãƒªã‚¹ãƒˆ
-	 * @param specifications
-	 *            éƒ¨é–€æ˜ç´°ãƒªã‚¹ãƒˆ
-	 * @param fileName
-	 *            ä¿å­˜å…ˆ
-	 * @throws NoListException
-	 *             ä»•è¨³ãƒªã‚¹ãƒˆãŒNullåˆã¯ç©ºã®ã¨ã
-	 * @throws IOException
-	 *             ãƒ•ã‚¡ã‚¤ãƒ«ã‚·ã‚¹ãƒ†ãƒ ä¸Šã§ã‚¨ãƒ©ãƒ¼ãŒç™ºç”Ÿã—ãŸã¨ã
-	 * @throws FileNameEmptyException
-	 *             ãƒ•ã‚¡ã‚¤ãƒ«åãŒNullåˆã¯ç©ºç™½ã®ã¨ã
-	 */
-	public static void saveJournals(List<Journal> journals,
-			List<DepartmentSpecification> specifications, String fileName)
-			throws NoListException, IOException, FileNameEmptyException {
-		// ä»•è¨³ãƒ•ã‚¡ã‚¤ãƒ«ã®ä¿å­˜ã‚’ä¸¸æŠ•ã’ã™ã‚‹
-		saveJournals(journals, fileName);
-		// ã“ã“ã‹ã‚‰éƒ¨é–€æ˜ç´°ãƒ•ã‚¡ã‚¤ãƒ«ã‚’ä¿å­˜
-		// ã¾ãšæ‹¡å¼µå­ã‚’ã€Œ.clsã€ã«å¤‰æ›
-		String name = FilenameUtils.getFullPath(fileName)
-				+ FilenameUtils.getBaseName(fileName) + ".cls";
-		CsvManager csvManager=CsvManagerFactory.newCsvManager();
-		csvManager.save(specifications, DepartmentSpecification.class).to(new File(name));
-	}
+    /**
+     * ÉôÌçÌÀºÙ¤ò´Ş¤á¤Æ»ÅÌõ¥Õ¥¡¥¤¥ë¤òÊİÂ¸¤¹¤ë. ÉôÌçÌÀºÙ¤Î»ÅÍÍ¤¬Ê£»¨¤Ç¤¢¤ë¤¿¤á¡¢Èó¿ä¾©¥¢¥Î¥Æ¡¼¥·¥ç¥ó¤Ï¤Ä¤±¤Æ¤¤¤Ê¤¤¤¬Èó¿ä¾©.
+     *
+     * @param journals »ÅÌõ¥ê¥¹¥È
+     * @param specifications ÉôÌçÌÀºÙ¥ê¥¹¥È
+     * @param fileName ÊİÂ¸Àè
+     * @throws NoListException »ÅÌõ¥ê¥¹¥È¤¬NullËô¤Ï¶õ¤Î¤È¤­
+     * @throws IOException ¥Õ¥¡¥¤¥ë¥·¥¹¥Æ¥à¾å¤Ç¥¨¥é¡¼¤¬È¯À¸¤·¤¿¤È¤­
+     * @throws FileNameEmptyException ¥Õ¥¡¥¤¥ëÌ¾¤¬NullËô¤Ï¶õÇò¤Î¤È¤­
+     */
+    public static void saveJournals(List<Journal> journals,
+            List<DepartmentSpecification> specifications, String fileName)
+            throws NoListException, IOException, FileNameEmptyException {
+        // »ÅÌõ¥Õ¥¡¥¤¥ë¤ÎÊİÂ¸¤ò´İÅê¤²¤¹¤ë
+        saveJournals(journals, fileName);
+	// ¤³¤³¤«¤éÉôÌçÌÀºÙ¥Õ¥¡¥¤¥ë¤òÊİÂ¸
+        // ¤Ş¤º³ÈÄ¥»Ò¤ò¡Ö.cls¡×¤ËÊÑ´¹
+        String name = FilenameUtils.getFullPath(fileName)
+                + FilenameUtils.getBaseName(fileName) + ".cls";
+        CsvManager csvManager = CsvManagerFactory.newCsvManager();
+        csvManager.save(specifications, DepartmentSpecification.class).to(new File(name));
+    }
 
 }
