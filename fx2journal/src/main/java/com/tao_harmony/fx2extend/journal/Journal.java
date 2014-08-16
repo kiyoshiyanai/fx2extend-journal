@@ -80,11 +80,11 @@ public class Journal {
 	/**
 	 * 取引金額.
 	 */
-	private Double ammount;
+	private Long ammount;
 	/**
 	 * 消費税額.消費税が発生しない取引、または税込み経理の場合はゼロ固定.
 	 */
-	private Double taxAmmount;
+	private Long taxAmmount;
 	/**
 	 * 税額入力区分.税抜き経理かつ消費税をシステムで自動計算している場合のみ1をセット.
 	 */
@@ -305,25 +305,25 @@ public class Journal {
 	/**
 	 * @return ammount
 	 */
-	public Double getAmmount() {
+	public Long getAmmount() {
 		return ammount;
 	}
 	/**
 	 * @param ammount ammountをセットする
 	 */
-	public void setAmmount(Double ammount) {
+	public void setAmmount(Long ammount) {
 		this.ammount = ammount;
 	}
 	/**
 	 * @return taxAmmount
 	 */
-	public Double getTaxAmmount() {
+	public Long getTaxAmmount() {
 		return taxAmmount;
 	}
 	/**
 	 * @param taxAmmount taxAmmountをセットする
 	 */
-	public void setTaxAmmount(Double taxAmmount) {
+	public void setTaxAmmount(Long taxAmmount) {
 		this.taxAmmount = taxAmmount;
 	}
 	/**
