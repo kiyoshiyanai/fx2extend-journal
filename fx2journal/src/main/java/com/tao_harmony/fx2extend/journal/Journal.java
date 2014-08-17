@@ -150,7 +150,7 @@ public class Journal {
      */
     private final Short filler3 = JournalUtil.FX2_FILLER;
     /**
-     * 自動仕分番号.対応付け扶養の場合はゼロをセット.
+     * 自動仕分番号.対応付け不要の場合はゼロをセット.
      */
     private Integer ruleNumber;
     /**
