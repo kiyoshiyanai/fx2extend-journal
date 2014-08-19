@@ -16,6 +16,8 @@
  */
 package com.tao_harmony.fx2extend.journal;
 
+import com.orangesignal.csv.handlers.CsvEntityListHandler;
+import com.orangesignal.csv.manager.CsvEntityManager;
 import java.io.File;
 import java.io.IOException;
 import java.util.List;
@@ -74,8 +76,11 @@ public class JournalUtil {
 		String name = FilenameUtils.getFullPath(fileName)
 				+ FilenameUtils.getBaseName(fileName) + ".slp";
 		// 保存
-		CsvManager csvManager = CsvManagerFactory.newCsvManager();
+                CsvManager csvManager = new CsvEntityManager();
+                //CsvManager csvManager = CsvManagerFactory.newCsvManager();
 		csvManager.save(journals, Journal.class).to(new File(name));
+                
+                
 	}
 
 	/**
@@ -103,7 +108,8 @@ public class JournalUtil {
 		// まず拡張子を「.cls」に変換
 		String name = FilenameUtils.getFullPath(fileName)
 				+ FilenameUtils.getBaseName(fileName) + ".cls";
-		CsvManager csvManager=CsvManagerFactory.newCsvManager();
+                CsvManager csvManager = new CsvEntityManager();
+		//CsvManager csvManager=CsvManagerFactory.newCsvManager();
 		csvManager.save(specifications, DepartmentSpecification.class).to(new File(name));
 	}
 
