@@ -154,7 +154,7 @@ public class Journal {
      * 予備領域2.
      */
     @CsvColumn(position = 24, defaultValue = "")
-    private final String filler2 = StringUtils.EMPTY;
+    private final String filler2 = JournalUtil.FX2_NULL;
     /**
      * 資金大項目.
      */

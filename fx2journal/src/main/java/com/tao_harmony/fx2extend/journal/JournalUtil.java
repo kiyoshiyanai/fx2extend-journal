@@ -16,7 +16,6 @@
  */
 package com.tao_harmony.fx2extend.journal;
 
-import com.orangesignal.csv.handlers.CsvEntityListHandler;
 import com.orangesignal.csv.manager.CsvEntityManager;
 import java.io.File;
 import java.io.IOException;
@@ -26,7 +25,6 @@ import org.apache.commons.io.FilenameUtils;
 import org.apache.commons.lang3.StringUtils;
 
 import com.orangesignal.csv.manager.CsvManager;
-import com.orangesignal.csv.manager.CsvManagerFactory;
 
 /**
  * @author kyanai
@@ -42,6 +40,10 @@ public class JournalUtil {
 	 * システム区分領域に挿入する定数.999.
 	 */
 	public static final short FX2_SYSTEM_CLASS = (short) 999;
+        /**
+         * システム上NULLを表す定数.空文字列.
+         */
+        public static final String FX2_NULL = StringUtils.EMPTY;
 
 	/**
 	 * 部門明細抜きで仕訳ファイルを保存する.
